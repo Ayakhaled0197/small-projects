@@ -5,8 +5,9 @@ let textInDark = document.querySelectorAll('.text-dark')
 let main = document.getElementById("mainSec")
 let searchBar = document.getElementById('search')
 let listOfCountries = document.getElementById("options")
-darkMode.addEventListener("click", getDarkMode)
-
+let filter = document.getElementById('filterBar')
+let cards = document.getElementsByClassName("cards-styling")
+console.log(cards)
 let httpReq = new XMLHttpRequest()
 httpReq.open("GET", "data.json");
 httpReq.send()
@@ -14,7 +15,7 @@ let countries = [];
 httpReq.onload = function(){
     if(httpReq.status>=200 && httpReq.status <300 && httpReq.readyState == 4 ){
         countries = JSON.parse(httpReq.responseText)
-        console.log(countries)
+        // console.log(countries)
         getCountries()
         fillOptions()
     }
@@ -22,6 +23,7 @@ httpReq.onload = function(){
         console.error('Failed to load data:', httpReq.statusText);
     }
 }
+darkMode.addEventListener("click", getDarkMode)
 
 if(localStorage.getItem('Nav')=="nav-bar-dark" && localStorage.getItem('texts') == "dark-mode-texts") {
     for(var i = 0 ; i<textInDark.length ; i++ ){
@@ -32,6 +34,11 @@ if(localStorage.getItem('Nav')=="nav-bar-dark" && localStorage.getItem('texts') 
     navBar.classList.replace("nav-bar" ,"nav-bar-dark" );
     main.classList.replace("section" ,"section-dark");
     searchBar.classList.replace("section" ,"section-dark")
+    listOfCountries.classList.replace( "default" ,"elements-dark");
+    filter.classList.replace( "default" ,"elements-dark");
+    for(var i =0 ; i< cards.length ; i++){
+        cards[i].classList.replace( "default" ,"elements-dark");
+    }
 }
 else{
     if(darkModeToggle.classList.contains('fa-solid') && navBar.classList.contains('nav-bar-dark')){
@@ -43,14 +50,24 @@ else{
         }
         main.classList.replace( "section-dark","section")
         searchBar.classList.replace( "section-dark","section")
+        listOfCountries.classList.replace("elements-dark" , "default")
+        filter.classList.replace("elements-dark" , "default")
+        for(var i =0 ;i<cards.length ; i++){
+            cards[i].classList.replace("elements-dark" , "default")
+        }
     }
 }
 
 function getDarkMode(){
     if(darkModeToggle.classList.contains('fa-solid') && navBar.classList.contains('nav-bar-dark')){
         darkModeToggle.classList.replace("fa-solid" ,"fa-regular" );
-        darkModeToggle.classList.remove("dark-mode-texts")
+        darkModeToggle.classList.remove("dark-mode-texts");
         navBar.classList.replace("nav-bar-dark" ,"nav-bar");
+        listOfCountries.classList.replace("elements-dark" , "default")
+        filter.classList.replace("elements-dark" , "default")
+        for(var i =0 ; i<cards.length; i++){
+            cards[i].classList.replace("elements-dark" , "default")
+        }
         for(var i = 0 ; i<textInDark.length ; i++ ){
             textInDark[i].classList.replace("dark-mode-texts" ,"text-dark")
         }
@@ -59,19 +76,26 @@ function getDarkMode(){
         localStorage.setItem("texts" , "text-dark")
         localStorage.setItem("Nav" , "nav-bar")
         localStorage.setItem("main" , "section")
+        localStorage.setItem("elements" , "default") 
     }
     else{
         for(var i = 0 ; i<textInDark.length ; i++ ){
             textInDark[i].classList.replace("text-dark","dark-mode-texts")
         }
-        main.classList.replace("section" ,"section-dark")
-        searchBar.classList.replace("section" ,"section-dark")
-        darkModeToggle.classList.add("dark-mode-texts")
+        main.classList.replace("section" ,"section-dark");
+        searchBar.classList.replace("section" ,"section-dark");
+        darkModeToggle.classList.add("dark-mode-texts");
         darkModeToggle.classList.replace("fa-regular" ,"fa-solid");
         navBar.classList.replace("nav-bar" ,"nav-bar-dark" );
+        listOfCountries.classList.replace( "default" ,"elements-dark");
+        filter.classList.replace( "default" ,"elements-dark");
+        for(var i =0 ; i<cards.length ;i++){
+            cards[i].classList.replace( "default" ,"elements-dark");
+        }
         localStorage.setItem("texts" , "dark-mode-texts")
         localStorage.setItem("Nav" , "nav-bar-dark")
         localStorage.setItem("main" , "section-dark")
+        localStorage.setItem("elements" , "elements-dark")
     }
 
 }
@@ -80,12 +104,13 @@ function getCountries(){
 let container = ''
 for(let i =0 ; i< countries.length ; i++){
     container+= `
-                <div class="card" style="width: 20rem;">
+                <div class="card" style="width: 20rem;" >
                     <img src="${countries[i].flags.png}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="card-body default cards-styling">
+                    <h5 class="card-title">${countries[i].name}</h5>
+                    <p class="card-text"><strong>Population</strong> : ${countries[i].population}</p>
+                    <p class="card-text"><strong>Region</strong> : ${countries[i].region}</p>
+                    <p class="card-text"><strong>Capital</strong> : ${countries[i].capital}</p>
                     </div>
                 </div>
     `
