@@ -18,13 +18,14 @@ httpReq.onload = function(){
         // console.log(countries)
         getCountries()
         fillOptions()
+        saveTheCurrentTheme()
     }
     else {
         console.error('Failed to load data:', httpReq.statusText);
     }
 }
-darkMode.addEventListener("click", getDarkMode)
 
+function saveTheCurrentTheme(){
 if(localStorage.getItem('Nav')=="nav-bar-dark" && localStorage.getItem('texts') == "dark-mode-texts") {
     for(var i = 0 ; i<textInDark.length ; i++ ){
         textInDark[i].classList.replace("text-dark","dark-mode-texts")
@@ -41,7 +42,7 @@ if(localStorage.getItem('Nav')=="nav-bar-dark" && localStorage.getItem('texts') 
     }
 }
 else{
-    if(darkModeToggle.classList.contains('fa-solid') && navBar.classList.contains('nav-bar-dark')){
+    // if(darkModeToggle.classList.contains('fa-solid') && navBar.classList.contains('nav-bar-dark')){
         darkModeToggle.classList.replace("fa-solid" ,"fa-regular" );
         darkModeToggle.classList.remove("dark-mode-texts")
         navBar.classList.replace("nav-bar-dark" ,"nav-bar");
@@ -52,11 +53,14 @@ else{
         searchBar.classList.replace( "section-dark","section")
         listOfCountries.classList.replace("elements-dark" , "default")
         filter.classList.replace("elements-dark" , "default")
-        for(var i =0 ;i<cards.length ; i++){
-            cards[i].classList.replace("elements-dark" , "default")
+
+        for(var i =0 ; i< cards.length ; i++){
+            cards[i].classList.replace("elements-dark" , "default");
         }
     }
+
 }
+// }
 
 function getDarkMode(){
     if(darkModeToggle.classList.contains('fa-solid') && navBar.classList.contains('nav-bar-dark')){
@@ -76,7 +80,7 @@ function getDarkMode(){
         localStorage.setItem("texts" , "text-dark")
         localStorage.setItem("Nav" , "nav-bar")
         localStorage.setItem("main" , "section")
-        localStorage.setItem("elements" , "default") 
+        localStorage.setItem("elements" , "default")
     }
     else{
         for(var i = 0 ; i<textInDark.length ; i++ ){
@@ -99,6 +103,8 @@ function getDarkMode(){
     }
 
 }
+
+darkMode.addEventListener("click", getDarkMode)
 
 function getCountries(){
 let container = ''
@@ -133,3 +139,6 @@ function fillOptions(){
     listOfCountries.innerHTML = container2;
 }
 
+filter.addEventListener("submit" , function(){
+
+})
