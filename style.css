@@ -34,6 +34,11 @@ body{
     position: relative;
     z-index: 10;
 }
+.elements-dark{
+    background-color:var(--Dark-Blue) !important;
+    border: 1px solid var(--Dark-Blue) !important;
+    color:var(--White) !important;
+}
 .nav-bar-dark{
     background-color:var(--Dark-Blue);
     display: flex;
@@ -92,4 +97,7 @@ h4{
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     color:var(--Dark-Gray)
+}
+.card-text{
+    margin:5px 0;
 }
