@@ -1,225 +1,398 @@
-// let darkMode = document.querySelector(".themes");
-// let darkModeToggle = document.querySelector(".themes .fa-moon");
-// let navBar = document.querySelector('.nav-bar');
-// let textInDark = document.querySelectorAll('.text-dark');
-// let main = document.getElementById("mainSec");
-// let searchBar = document.getElementById('search');
-// let listOfCountries = document.getElementById("options");
-// let filter = document.getElementById('filterBar');
-// let cards = document.getElementsByClassName("cards-styling");
-let darkMode = document.querySelector(".themes"),
-    darkModeToggle = document.querySelector(".themes .fa-moon"),
-    navBar = document.querySelector(".nav-bar"),
-    textInDark = document.querySelectorAll(".text-dark"),
-    main = document.getElementById("mainSec"),
-    searchBar = document.getElementById("search"),
-    listOfCountries = document.getElementById("options"),
-    filter = document.getElementById("filterBar"),
-    cards = document.getElementsByClassName("cards-styling");
 
-// let httpReq = new XMLHttpRequest()
-// httpReq.open("GET", "data.json");
-// httpReq.send()
-// httpReq.onload = function(){
-//     if(httpReq.status>=200 && httpReq.status <300 && httpReq.readyState == 4 ){
-//         countries = JSON.parse(httpReq.responseText)
-//         // console.log(countries)
-//         getCountries()
-//         fillOptions()
-//         saveTheCurrentTheme()
-//     }
-//     else {
-//         console.error('Failed to load data:', httpReq.statusText);
-//     }
-// }
+// BOM
+let header = document.querySelector('.nav') ;
+let upBtn = document.getElementById("backToTop")
+window.onscroll = function (){
+    if(window.scrollY > 100){
+        // header.classList.add('nav-fixed')
+        upBtn.classList.add('btn-primary-up')
+    }
+    else {
+        // header.classList.remove('nav-fixed')
+        upBtn.classList.remove('btn-primary-up')
+    }
+}
 
-let countries = [];
-fetch("data.json", {
-    method: "GET",
-})
-    .then((response) => response.json())
-    .then((resp) => {
-        countries = resp;
-        getCountries();
-        fillOptions();
-        saveTheCurrentTheme();
+let navigate = document.querySelector(".navigate");
+let btnThemeColor = document.querySelector(".different-themes")
+navigate.addEventListener("click", getColors)
+let btnThemeColorOpened = window.getComputedStyle(btnThemeColor).right
+function getColors(){
+    if(btnThemeColorOpened === "-200px"){
+        btnThemeColor.classList.replace('different-themes' ,'different-themes-clicked');
+    }
+    else if(btnThemeColorOpened === "0px"){
+        btnThemeColor.classList.replace('different-themes-clicked' ,'different-themes');
+    }
+}
+
+upBtn.addEventListener('click' , backToTop)
+
+function backToTop(){
+    window.scrollTo({
+        top:0,
+        behavior : "smooth"
     })
-    .catch((e) => {
-        console.error("Failed to load data:", e);
-    });
-
-function saveTheCurrentTheme() {
-    // if(localStorage.getItem('Nav')=="nav-bar-dark" && localStorage.getItem('texts') == "dark-mode-texts") {
-    if (localStorage.getItem("mode") == "dark") {
-        document.body.classList.add("dark");
-        document.body.classList.remove("light");
-        darkModeToggle.classList.replace("fa-regular", "fa-solid");
-
-        // for(var i = 0 ; i<textInDark.length ; i++ ){
-        //     textInDark[i].classList.replace("text-dark","dark-mode-texts")
-        // }
-        // darkModeToggle.classList.add("dark-mode-texts")
-        // darkModeToggle.classList.replace("fa-regular" ,"fa-solid");
-        // navBar.classList.replace("nav-bar" ,"nav-bar-dark" );
-        // main.classList.replace("section" ,"section-dark");
-        // searchBar.classList.replace("section" ,"section-dark")
-        // listOfCountries.classList.replace( "default" ,"elements-dark");
-        // filter.classList.replace( "default" ,"elements-dark");
-        // for(var i =0 ; i< cards.length ; i++){
-        //     cards[i].classList.replace( "default" ,"elements-dark");
-        // }
-    } else {
-        document.body.classList.add("light");
-        document.body.classList.remove("dark");
-        darkModeToggle.classList.replace("fa-solid", "fa-regular");
-        // if(darkModeToggle.classList.contains('fa-solid') && navBar.classList.contains('nav-bar-dark')){
-        // darkModeToggle.classList.replace("fa-solid" ,"fa-regular" );
-        // darkModeToggle.classList.remove("dark-mode-texts")
-        // navBar.classList.replace("nav-bar-dark" ,"nav-bar");
-        // for(var i = 0 ; i<textInDark.length ; i++ ){
-        //     textInDark[i].classList.replace("dark-mode-texts" ,"text-dark")
-        // }
-        // main.classList.replace( "section-dark","section")
-        // searchBar.classList.replace( "section-dark","section")
-        // listOfCountries.classList.replace("elements-dark" , "default")
-        // filter.classList.replace("elements-dark" , "default")
-
-        // for(var i =0 ; i< cards.length ; i++){
-        //     cards[i].classList.replace("elements-dark" , "default");
-        // }
-    }
 }
+
+document.getElementById('fileIn').addEventListener('change', function(event) {
+    const files = event.target.files; // This is a FileList object
+    for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    console.log('File name:', file.name);
+    console.log('File size:', file.size);
+    console.log('File type:', file.type);
+    }
+});
+
+// /////////////////////////////////////////////////////////////////////////////////////////
+var cartoona = "";
+var cartoona2 = `
+<option value="">please choose a year</option>
+`
+for(var i = 1950 ; i<=2000 ; i++){
+    cartoona +=`<option value="">${i}</option>`;
+}
+
+document.getElementById('listOp').innerHTML = cartoona2 + cartoona;
+
+var container  = "";
+
+for(var i = 0 ; i< 10 ; i++){
+    container += `
+    <li> ${i} - list item </li>`;
+}
+document.getElementById('listing').innerHTML = container;
+
+var container2 = "";
+for(var i = 0 ; i<5 ; i++){
+    container2 += `
+        <div class="some-style">
+        ${i} - content
+    </div>`;
+}
+// document.getElementById('test').innerHTML = container2;
+
+// var container3 = "";
+// var arr=[];
+// function addRow(){
+//     for(var i =0 ; i<5 ; i++){
+//         container3 += `
+//         <tr>
+//         <td>${i}</td>
+//         <td>userName</td>
+//         <td>userAge</td>
+//         </tr>
+//         `
+//         document.getElementById('tableTest').innerHTML = container3;
+//     }
+
 // }
 
-function getDarkMode() {
-    if (localStorage.getItem("mode") == "dark") {
-        localStorage.setItem("mode", "light");
-    } else {
-        localStorage.setItem("mode", "dark");
+
+// function addItemToLog(){
+//     let info = {
+//         name : username.value,
+//         email : email.value ,
+//         numberof : phonenumber.value
+//     };
+//     arr2.push(info);
+//     console.log(arr2);
+// }
+var username ; 
+var email ; 
+var phonenumber ;
+var count ;
+var adder ;
+var arr2= []
+var img ;
+
+if(localStorage.getItem("userInformation") == null){
+    arr2 =[]
+}
+else {
+    arr2 = JSON.parse(localStorage.getItem("userInformation"));
+    displayInfo()
+}
+
+document.addEventListener('DOMContentLoaded' , function(){
+    username =document.getElementById('username')
+    email =document.getElementById('emailjs')
+    phonenumber = document.getElementById('num')
+    adder = document.getElementById('addAll')
+    count =document.getElementById('count')
+    img = document.getElementById("pic")
+})
+
+function userInfo(event){
+    let info = {
+        userName : username.value ,
+        Email: email.value ,
+        userNumber : phonenumber.value ,
+        totalusers :parseInt(count.value),
+        addAll : parseInt(adder.value),
+        imgage : img.files[0].name
     }
-    saveTheCurrentTheme();
-    // if(darkModeToggle.classList.contains('fa-solid') && navBar.classList.contains('nav-bar-dark')){
-    //     darkModeToggle.classList.replace("fa-solid" ,"fa-regular" );
-    //     darkModeToggle.classList.remove("dark-mode-texts");
-    //     navBar.classList.replace("nav-bar-dark" ,"nav-bar");
-    //     listOfCountries.classList.replace("elements-dark" , "default")
-    //     filter.classList.replace("elements-dark" , "default")
-    //     for(var i =0 ; i<cards.length; i++){
-    //         cards[i].classList.replace("elements-dark" , "default")
-    //     }
-    //     for(var i = 0 ; i<textInDark.length ; i++ ){
-    //         textInDark[i].classList.replace("dark-mode-texts" ,"text-dark")
-    //     }
-    //     main.classList.replace( "section-dark","section")
-    //     searchBar.classList.replace( "section-dark","section")
-    //     localStorage.setItem("texts" , "text-dark")
-    //     localStorage.setItem("Nav" , "nav-bar")
-    //     localStorage.setItem("main" , "section")
-    //     localStorage.setItem("elements" , "default")
-    // }
-    // else{
-    //     for(var i = 0 ; i<textInDark.length ; i++ ){
-    //         textInDark[i].classList.replace("text-dark","dark-mode-texts")
-    //     }
-    //     main.classList.replace("section" ,"section-dark");
-    //     searchBar.classList.replace("section" ,"section-dark");
-    //     darkModeToggle.classList.add("dark-mode-texts");
-    //     darkModeToggle.classList.replace("fa-regular" ,"fa-solid");
-    //     navBar.classList.replace("nav-bar" ,"nav-bar-dark" );
-    //     listOfCountries.classList.replace( "default" ,"elements-dark");
-    //     filter.classList.replace( "default" ,"elements-dark");
-    //     for(var i =0 ; i<cards.length ;i++){
-    //         cards[i].classList.replace( "default" ,"elements-dark");
-    //     }
-    //     localStorage.setItem("texts" , "dark-mode-texts")
-    //     localStorage.setItem("Nav" , "nav-bar-dark")
-    //     localStorage.setItem("main" , "section-dark")
-    //     localStorage.setItem("elements" , "elements-dark")
-    // }
-}
 
-darkMode.addEventListener("click", getDarkMode);
-
-function getCountries() {
-    let container = "";
-
-    countries.forEach((country) => {
-        // for(let i =0 ; i< countries.length ; i++){
-        // container+= `
-        //             <div class="card" style="width: 20rem;" >
-        //                 <img src="${countries[i].flags.png}" class="card-img-top" alt="...">
-        //                 <div class="card-body default cards-styling">
-        //                 <h5 class="card-title">${countries[i].name}</h5>
-        //                 <p class="card-text"><strong>Population</strong> : ${countries[i].population}</p>
-        //                 <p class="card-text"><strong>Region</strong> : ${countries[i].region}</p>
-        //                 <p class="card-text"><strong>Capital</strong> : ${countries[i].capital}</p>
-        //                 </div>
-        //             </div>
-        // `
-        let card = document.createElement("div"),
-            img_element = document.createElement("img"),
-            card_body = document.createElement("div"),
-            h5 = document.createElement("h5"),
-            population = document.createElement("p"),
-            region = document.createElement("p"),
-            capital = document.createElement("p");
-
-        card.classList.add("card");
-        card.style.width = "20rem";
-
-        img_element.src = country.flags.png;
-        img_element.alt = country.name;
-        img_element.classList.add("card-img-top");
-
-        card_body.classList.add("card-body", "default", "cards-styling");
-
-        h5.classList.add("card-title");
-        h5.innerText = country.name;
-
-        population.classList.add('caard-text');
-        region.classList.add('caard-text');
-        capital.classList.add('caard-text');
-
-        population.innerHTML = `<strong>Population</strong> : ${country.population}`;
-        region.innerHTML = `<strong>Region</strong> : ${country.region}`;
-        capital.innerHTML = `<strong>Capital</strong> : ${country.capital}`;
-
-        card.appendChild(img_element);
-        card.appendChild(card_body);
-        card_body.appendChild(h5);
-        card_body.appendChild(population);
-        card_body.appendChild(region);
-        card_body.appendChild(capital);
-        // }
-        main.appendChild(card);
-    });
-    // main.innerHTML = container;
-}
-function fillOptions() {
-    let container2 = '<option value="" disabled selected>Filter By Region</option>';
-    let regionContainer = [];
-    // for (let i = 0; i < countries.length; i++) {
-    //     regionContainer.add(countries[i].region);
-    // }
-    // countries.forEach(country => {
-    //     regionContainer.add(country.region);
-    // });
-    // let regionContainerArray = Array.from(regionContainer);
-    // for (let i = 0; i < regionContainerArray.length; i++) {
-    //     container2 += `
-    //                 <option value="${countries[i].region}">${countries[i].region}</option>
-    //                 `;
-    // }
-
-    countries.forEach(country => {
-        if (!regionContainer.includes(country.region)) {
-            container2 += `
-                <option value="${country.region}">${country.region}</option>
-                `;
-            regionContainer.push(country.region)
+    var container5 ="";
+    if(info.addAll > 0){
+        for(var i = 0 ; i< info.addAll ; i++){
+            arr2.push(info)
         }
-    });
-    listOfCountries.innerHTML = container2;
+    }
+    else{
+        arr2.push(info)
+    }
+    localStorage.setItem("userInformation" , JSON.stringify(arr2))
+    displayInfo()
+    totalUsers()
+    emptyForm()
 }
 
-filter.addEventListener("submit", function () { });
+function totalUsers(){
+    var sum = 0
+for(var i =0 ; i< arr2.length; i++){
+    sum+=arr2[i].totalusers
+}
+return sum;
+}
+
+function displayInfo(){
+    let container4 = ""; // ********important to be initialized inside the function
+    for(var i = 0 ; i< arr2.length ; i++){
+        container4 +=`
+        <tr>
+        <td>${i+1}</td>
+        <td>${arr2[i].userName}</td>
+        <td>${arr2[i].Email}</td>
+        <td>${arr2[i].userNumber}</td>
+        <td>${totalUsers()}</td>
+        <td>${arr2[i].image}</td>
+        <td>
+        <button class ="btn btn-danger" onclick="deleteSingleProdcut(${i})">
+        delete 
+        </button> </td>
+        <td> 
+        <button class="btn btn-warning" id="updateSingle" onclick="editUser(${i})">
+        Update </button> </td>
+        </tr>
+        `
+    }
+    document.getElementById('tbody').innerHTML = container4;
+}
+
+function deleteAllInfo(){
+    arr2.splice(0);
+    localStorage.setItem("userInformation" , JSON.stringify(arr2))
+    displayInfo();
+    // the function is called because changes have been made to the array 
+    // and we want the new changes to display 
+}
+
+function emptyForm(){
+    username.value = null; 
+    email.value = null ;
+    phonenumber.value = null;
+    count.value = null;
+adder.value = null
+img.files[0].name = null
+}
+
+function deleteSingleProdcut(i){
+    arr2.splice(i,1)
+    localStorage.setItem("userInformation" , JSON.stringify(arr2))
+    displayInfo()
+}
+
+function editUser(index) {
+    currentIndex = index;
+    let user = arr2[index];
+    username.value = user.userName;
+    email.value = user.Email;
+    phonenumber.value = user.userNumber;
+    count.value = user.totalusers;
+    adder.value = user.addAll;
+    img.value = "";
+
+    document.getElementById('submit').innerText = "Update";
+    document.getElementById('submit').onclick = updateUser;
+}
+
+function updateUser(event) {
+    let info = {
+        userName: username.value,
+        Email: email.value,
+        userNumber: phonenumber.value,
+        totalusers: parseInt(count.value),
+        addAll: parseInt(adder.value),
+        image: img.files[0] ? img.files[0].name : arr2[currentIndex].image
+    };
+
+    arr2[currentIndex] = info;
+    localStorage.setItem("userInformation", JSON.stringify(arr2));
+    displayInfo();
+    totalUsers();
+    emptyForm();
+
+    document.getElementById('submit').innerHTML = "Save";
+    document.getElementById('submit').onclick = userInfo;
+}
+///////////
+let userInfoo = {
+    name: "aya" ,
+    age : 21 , 
+    favColor : "purple"
+}
+
+// localStorage.setItem("name" , "aya")
+// localStorage.setItem("infoo" ,JSON.stringify(userInfoo))
+
+// var x = localStorage.getItem('infoo')
+// console.log(x)
+
+// DOM Learning 
+
+var h2s = document.getElementsByClassName('collection');
+console.log(h2s)
+for(var i =0 ; i< h2s.length ; i++){
+    console.log(h2s[i])
+}
+
+var xx = document.querySelector('.btn-dom')
+
+xx.addEventListener( "click" , function(e){
+    document.querySelector(".btn-dom").innerHTML = "happened ! "
+    document.querySelector(".btn-dom").style =" color:darkgoldenrod; padding:10px; font-weight:700;"
+    console.log(e);
+})
+
+
+var another = document.querySelector(".btn-dom-2")
+
+let divColoring = document.querySelector(".test-file")
+
+
+divColoring.addEventListener("mousemove" , function(){
+let r = Math.random()*255
+let g = Math.random()*255
+let b = Math.random()*255
+    document.querySelector(".test-file").style.backgroundColor=`rgb(${r},${g},${b})`
+})
+
+let divStyleChange = document.getElementById("replace")
+
+divStyleChange.addEventListener("mouseleave" , function(){
+// divStyleChange.classList.remove()
+divStyleChange.classList.replace( "test-classList" ,"test-classList-replace")
+})
+
+
+let mainImg = document.getElementById('mainImg')
+
+let imgs = document.querySelectorAll(".img-styling img")
+
+for(var i =0 ; i<imgs.length ; i++){
+    imgs[i].addEventListener("click", function(e){
+        let imgView = e.target.src
+        mainImg.setAttribute("src",imgView)
+    })
+}
+
+
+let galleryImgs = Array.from(document.querySelectorAll('.img-gallery img')) 
+let closeBtn = document.getElementById('closeIcon')
+let rightbtn = document.getElementById('arrowRight')
+let leftbtn = document.getElementById('arrowLeft')
+
+let currentIndexSlider = 0
+for(var i =0 ; i<galleryImgs.length ; i++){
+    galleryImgs[i].addEventListener("click", function(e){
+        currentIndexSlider = galleryImgs.indexOf(e.target)
+        document.querySelector('.focus-on-img').style.display ="flex";
+        let imgSrc = e.target.src
+        document.querySelector('.inner-focus').style.backgroundImage =`url(${imgSrc})`
+    })
+}
+
+closeBtn.addEventListener("click" , closeItem)
+function closeItem(){
+    document.querySelector('.focus-on-img').style.display ="none";
+}
+
+rightbtn.addEventListener("click" , goRight)
+function goRight(e){
+    currentIndexSlider++;
+    if(currentIndexSlider  > galleryImgs.length -1){
+        currentIndexSlider = 0;
+    }
+        document.querySelector('.inner-focus').style.backgroundImage =`url(${galleryImgs[currentIndexSlider].src})`
+}
+
+leftbtn.addEventListener("click", goLeft)
+function goLeft(e){
+    currentIndexSlider--;
+    if(currentIndexSlider  < 0 ){
+        currentIndexSlider = galleryImgs.length-1;
+    }
+        document.querySelector('.inner-focus').style.backgroundImage =`url(${galleryImgs[currentIndexSlider].src})`
+}
+
+
+document.addEventListener("keydown" , function(e){
+    if(e.keyCode === 39){
+        goRight()
+    }
+    else if(e.keyCode === 37){
+        goLeft()
+    }
+    else if( e.keyCode === 27){
+        closeItem()
+    }
+})
+
+// console.log('Start');
+
+// setTimeout(() => {
+//     console.log('Async operation completed');
+// }, 10); // A function that runs after 2 seconds
+
+// console.log('End');
+
+// Define the API URL
+const apiUrl = 'https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza';
+
+// Fetch data from the API
+fetch(apiUrl)
+.then(response => {
+    // Check if the response is successful
+    if (!response.ok) {
+    throw new Error('Network response was not ok (Status: ${response.status})');
+    }
+    // Parse the JSON data from the response
+    return response.json();
+})
+.then(data => {
+    // Handle the parsed data
+    console.log('Fetched Recipes:', data.data.recipes);
+})
+.catch(error => {
+    // Handle any errors that occurred during the fetch
+    console.error('There was a problem with the fetch operation:', error);
+});
+function getcards(){
+    let container ='';
+    for(let i =0 ; i< 4 ; i++){
+        container+=`
+        <div class="card col-4" style="width: 18rem;">
+        <img src="${apiUrl.recipes[i].image_url}" class="card-img-top" alt="...">
+        <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
+        `
+    }
+    document.querySelector('.cards-api-callback').innerHTML = container;
+}
+getcards()
